@@ -1,0 +1,15 @@
+{
+	"required": true,
+	"package": "io.github.codex.portalnpb.mixin",
+	"compatibilityLevel": "JAVA_21",
+	"mixins": [
+		"BlockItemMixin",
+		"NetherPortalBlockMixin",
+		"ScoreboardMixin",
+		"ServerPlayerGameModeMixin",
+		"ServerWorldMixin"
+	],
+	"injectors": {
+		"defaultRequire": 1
+	}
+}

@@ -1,0 +1,36 @@
+import groovy.json.JsonSlurper
+
+pluginManagement {
+    repositories {
+        mavenCentral()
+        gradlePluginPortal()
+        maven {
+            name = 'Fabric'
+            url = 'https://maven.fabricmc.net/'
+        }
+        maven {
+            name = 'Jitpack'
+            url = 'https://jitpack.io'
+        }
+        resolutionStrategy {
+            eachPlugin {
+                if (requested.id.id == 'com.replaymod.preprocess') {
+                    useModule("com.github.Fallen-Breath:preprocessor:${requested.version}")
+                }
+            }
+        }
+    }
+}
+
+rootProject.name = 'portalnpb-fabric-preprocess'
+
+Map<String, List<String>> settings = file('settings.json').withReader {
+    new JsonSlurper().parse(it) as Map<String, List<String>>
+}
+
+for (String version : settings.get('versions')) {
+    include(":$version")
+    ProjectDescriptor projectDescriptor = project(":$version")
+    projectDescriptor.setProjectDir(file("versions/$version"))
+    projectDescriptor.setBuildFileName('../../common.gradle')
+}

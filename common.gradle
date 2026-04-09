@@ -1,0 +1,95 @@
+final int mcVersion = project.mcVersion
+final String mainProject = rootProject.file('versions/mainProject').text.trim()
+final boolean isMainProject = project.name == mainProject
+
+apply plugin: 'net.fabricmc.fabric-loom-remap'
+apply plugin: 'com.replaymod.preprocess'
+apply plugin: 'maven-publish'
+
+version = "${project.mod_version}+${project.minecraft_version}"
+group = project.maven_group
+
+base {
+    archivesName.set(project.archives_base_name + '-' + project.minecraft_version)
+}
+
+repositories {
+    maven {
+        name = 'Fabric'
+        url = 'https://maven.fabricmc.net/'
+    }
+    mavenCentral()
+}
+
+sourceSets {
+    main {
+        java.srcDirs = [project.file(isMainProject ? 'src/main/java' : 'build/preprocessed/main/java')]
+        resources.srcDirs = [project.file(isMainProject ? 'src/main/resources' : 'build/preprocessed/main/resources')]
+    }
+}
+
+loom {
+    mods {
+        portalnpb {
+            sourceSet sourceSets.main
+        }
+    }
+}
+
+dependencies {
+    minecraft "com.mojang:minecraft:${project.minecraft_version}"
+    mappings loom.officialMojangMappings()
+    modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
+}
+
+processResources {
+    inputs.property 'version', project.version
+    inputs.property 'minecraft_support', project.minecraft_support_version
+
+    filesMatching('fabric.mod.json') {
+        expand([
+                version          : project.version,
+                minecraft_support: project.minecraft_support_version
+        ])
+    }
+}
+
+tasks.withType(JavaCompile).configureEach {
+    it.options.release = 21
+    it.options.encoding = 'UTF-8'
+}
+
+java {
+    withSourcesJar()
+    sourceCompatibility = JavaVersion.VERSION_21
+    targetCompatibility = JavaVersion.VERSION_21
+}
+
+afterEvaluate {
+    if (!isMainProject) {
+        tasks.named('sourcesJar').configure {
+            dependsOn tasks.named('preprocessCode')
+            dependsOn tasks.named('preprocessResources')
+        }
+    }
+}
+
+jar {
+    inputs.property 'archivesName', project.base.archivesName.get()
+
+    from(rootProject.file('LICENSE')) {
+        rename { "${it}_${inputs.properties.archivesName}" }
+    }
+}
+
+publishing {
+    publications {
+        create('mavenJava', MavenPublication) {
+            artifactId = project.base.archivesName.get()
+            from components.java
+        }
+    }
+
+    repositories {
+    }
+}

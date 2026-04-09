@@ -1,0 +1,18 @@
+plugins {
+    id 'net.fabricmc.fabric-loom-remap' version '1.15.5' apply false
+    id 'maven-publish'
+    id 'com.replaymod.preprocess' version 'c5abb4fb12'
+}
+
+preprocess {
+    strictExtraMappings = false
+
+    def mc12100 = createNode('1.21', 1_21_00, 'official')
+    def mc12110 = createNode('1.21.10', 1_21_10, 'official')
+
+    mc12100.link(mc12110, null)
+
+    for (final def node in getNodes()) {
+        findProject(node.project).ext.mcVersion = node.mcVersion
+    }
+}

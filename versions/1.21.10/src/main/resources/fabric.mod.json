@@ -1,0 +1,26 @@
+{
+	"schemaVersion": 1,
+	"id": "portalnpb",
+	"version": "${version}",
+	"name": "Portal NPB",
+	"description": "Counts same-tick nether portal block breaks caused by player updates.",
+	"authors": [
+		"Codex"
+	],
+	"contact": {},
+	"license": "MIT",
+	"environment": "server",
+	"entrypoints": {
+		"main": [
+			"io.github.codex.portalnpb.PortalNpbMod"
+		]
+	},
+	"mixins": [
+		"portalnpb.mixins.json"
+	],
+	"depends": {
+		"fabricloader": ">=0.17.3",
+		"minecraft": "${minecraft_support}",
+		"java": ">=21"
+	}
+}
