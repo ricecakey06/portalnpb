@@ -4,19 +4,17 @@ on:
   push:
     branches:
       - main
-  pull_request:
-    types: [opened, reopened, synchronize]
+      - master
 
+# Permissions for default token (secrets.GITHUB_TOKEN)
 permissions:
-  contents: read
+  contents: write
+  pull-requests: read
 
 jobs:
   update_release_draft:
-    permissions:
-      contents: write  # for release-drafter/release-drafter to create a github release
-      pull-requests: write  # for release-drafter/release-drafter to add label to PR
     runs-on: ubuntu-latest
     steps:
-      - uses: release-drafter/release-drafter@v5
-        env:
-          GH_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+      - uses: release-drafter/release-drafter@v7
+        with:
+          config-name: release-drafter.yml # the default, loads '.github/release-drafter.yml'
