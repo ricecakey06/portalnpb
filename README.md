@@ -1,6 +1,6 @@
 # Portal NPB
 
-[简体中文说明](README_ZH.md)
+[简体中文](README_ZH.md)
 
 `Portal NPB` is a server-side Fabric mod for tracking same-tick nether portal block breaks caused by player-triggered block updates.
 
