@@ -1,6 +1,6 @@
 # Portal NPB
 
-[简体中文](README_ZH.md)
+[中文说明 / Chinese README](README_ZH.md)
 
 `Portal NPB` is a server-side Fabric mod for tracking same-tick nether portal block breaks caused by player-triggered block updates.
 
@@ -29,10 +29,27 @@ Notice: This mod is made by OpenAI GPT 5.4, and there is no guarantee for its av
 .\gradlew.bat clean build
 ```
 
+GitHub Actions will also run this build automatically on every `push` and `pull_request`, and upload the generated jars as workflow artifacts.
+
+## GitHub Actions
+
+This repository includes a GitHub Actions workflow at `.github/workflows/build.yml`.
+After pushing to GitHub, Actions will automatically build the mod and upload the jars from `versions/*/build/libs/` as downloadable artifacts.
+
 Build outputs:
 
 - `versions/1.21/build/libs/portalnpb-1.21-<version>.jar`
 - `versions/1.21.10/build/libs/portalnpb-1.21.10-<version>.jar`
+
+## GitHub Actions
+
+This repository includes a GitHub Actions workflow at `.github/workflows/build.yml`.
+
+On every `push` and `pull_request`, GitHub will:
+
+- build the project with Java `21`
+- run `./gradlew build`
+- upload the generated jars from `versions/*/build/libs/*.jar` as workflow artifacts
 
 ## Project Layout
 
