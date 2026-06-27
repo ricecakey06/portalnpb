@@ -52,6 +52,8 @@ Build outputs:
 ## Reference
 - yh-bbl: https://gitee.com/harvey-husky/yh-bbl
 - gugle-carpet-addition: https://github.com/Gu-ZT/gugle-carpet-addition
+- https://github.com/Fallen-Breath/preprocessor
+- https://github.com/ReplayMod/preprocessor
 
 ## License
 MIT. See [LICENSE](LICENSE).
