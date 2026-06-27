@@ -56,4 +56,4 @@ Build outputs:
 - https://github.com/ReplayMod/preprocessor
 
 ## License
-MIT. See [LICENSE](LICENSE).
+GPL-3.0. See [LICENSE](LICENSE).
